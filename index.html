@@ -1,0 +1,59 @@
+<html class="no-js" lang="">
+<head>
+  <script src="fetch.js"></script>
+</head>
+<body>
+<center>
+<p id="result"></p>
+<h2>Fetch API</h2>
+<button onclick="getRequestExample()">get</button>
+<button onclick="postRequestExample()">post</button>
+<button onclick="loopArrayExample()">array</button>
+<button onclick="loopObjectKeysExample()">keys</button>
+<button onclick="loopObjectValuesExample()">values</button>
+</center>
+<script>
+  function printResult(response) {
+    console.log(response);
+  }
+
+  function getName(json) {
+    printResult(parse(json).name);
+  }
+
+  function getRequestExample() {
+    //GET request to an api, the result will be sent to callback function "getName" which parses the received JSON and gets the value of "name"
+    //If you dont need headers, just do getRequest(url, callback);
+    getRequest('http://api.openweathermap.org/data/2.5/weather?zip=02155,us&APPID=ab1f05fcaaa42d2c07e9dfd895d2ee39', getName,
+      {
+        'header':'header value',
+        'header':'header value'
+      });
+  }
+
+  function postRequestExample() {
+    //POST request with custom headers to a url that will echo back all headers in the request
+    //If you don't need headers, just do postRequest(url, callback);
+    postRequest('http://heyroot.com/tufts/post.php', printResult,
+      {
+        'testheader1':'header1 value',
+        'testheader2':'header2 value'
+      });
+  }
+
+  function loopArrayExample() {
+    //This will loop through a json array and send the result to the callback individually
+    loopArray(['a', 'b', 'c'], printResult); //returns a, b, c,
+  }
+
+  function loopObjectKeysExample() {
+    //This will loop through the keys of a json object and send the result to the callback individually
+    loopObjectKeys({'a':'a1', 'b':'b1', 'c':'c1'}, printResult); //returns a, b, c,
+  }
+
+  function loopObjectValuesExample() {
+    //This will loop through the values of a json object and send the result to the callback individually
+    loopObjectValues({'a':'a1', 'b':'b1', 'c':'c1'}, printResult); //returns a1, b1, c1,
+  }
+</script>
+</body>
